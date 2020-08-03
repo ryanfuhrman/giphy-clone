@@ -7,6 +7,7 @@
     <title>GIPHY Clone</title>
 
     <link rel="stylesheet" href="./styles.css" />
+    <link rel="shortcut icon" href="" />
   </head>
   <body>
     <nav>
@@ -25,20 +26,27 @@
         <button>Log In</button>
       </div>
     </nav>
-    <input type="text" placeholder="Search All GIFs and Stickers" />
+    <button class="trending-button">Trending</button>
+    <label for="gif-search"></label>
+    <input
+      type="text"
+      id="gif-search"
+      class="gif-search"
+      placeholder="Search All GIFs and Stickers"
+    />
+    <button class="gif-search-button">Search</button>
     <div class="main">
-      <section class="trending">
-        <h1 class="section-title trending-title">Trending GIFs</h1>
-        <p class="see-all">See All ></p>
-        <div class="trending-gifs">
-          <ul class="trending-gifs-list"></ul>
+      <section class="gifs">
+        <h1 class="section-title gifs-title">Trending GIFs</h1>
+        <div class="gifs-container">
+          <ul class="gifs-list"></ul>
         </div>
       </section>
-      <section class="videos">
+      <!-- <section class="videos">
         <h1 class="section-title videos-title">GIPHY Videos</h1>
         <p class="see all">See All Videos ></p>
         <div class="trending-videos"></div>
-      </section>
+      </section> -->
     </div>
 
     <!-- JS -->
