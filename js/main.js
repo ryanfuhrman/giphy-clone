@@ -5,8 +5,8 @@
 const gifsList = document.querySelector(".gifs-list");
 const gifsTitle = document.querySelector(".gifs-title");
 const trendingButton = document.querySelector(".trending-button");
-const searchField = document.querySelector(".gif-search-input");
-const searchButton = document.querySelector(".gif-search-button");
+const searchField = document.querySelector(".search-bar-input");
+const searchButton = document.querySelector(".search-bar-button");
 const loadMoreButton = document.querySelector(".load-more-button");
 const limit = 10;
 let offset = 0;
@@ -18,8 +18,8 @@ const view = {
     gifsList.innerHTML = "";
     gifsTitle.innerHTML = "Trending GIFs";
     data.data.map((gif) => {
-      return (gifsList.innerHTML += `<li id="${gif.id}">
-          <img src="${gif.images.original.url}" alt="${gif.title}"></img>
+      return (gifsList.innerHTML += `<li class="gifs-li" id="${gif.id}">
+          <img  class="gifs-image" src="${gif.images.original.url}" alt="${gif.title}"></img>
         </li>`);
     });
   },
@@ -31,8 +31,8 @@ const view = {
     }
     gifsTitle.innerHTML = `Results for "${searchQuery}"`;
     data.data.map((gif) => {
-      return (gifsList.innerHTML += `<li id="${gif.id}">
-          <img src="${gif.images.original.url}" alt="${gif.title}"></img>
+      return (gifsList.innerHTML += `<li class="gifs-li" id="${gif.id}">
+          <img class="gifs-image" src="${gif.images.original.url}" alt="${gif.title}"></img>
         </li>`);
     });
   },
@@ -67,9 +67,10 @@ const controller = {
     loadMoreButton.style.display = "block";
     const searchQuery = searchField.value;
     lastSearch = searchQuery;
-    this.getGifs(
-      `http://api.giphy.com/v1/gifs/search?q=${searchQuery}&api_key=${config.API_KEY}&limit=${limit}`
-    )
+    controller
+      .getGifs(
+        `http://api.giphy.com/v1/gifs/search?q=${searchQuery}&api_key=${config.API_KEY}&limit=${limit}`
+      )
       .then((response) => response.json())
       .then((data) => {
         view.populateSearch(data, searchQuery, true);

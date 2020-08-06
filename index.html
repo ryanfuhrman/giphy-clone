@@ -8,35 +8,38 @@
 
     <link rel="stylesheet" href="./css/normalize.css" />
     <link rel="stylesheet" href="./css/reset.local.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/styles.css" />
     <link rel="shortcut icon" href="" />
   </head>
   <body>
     <nav class="nav-bar">
-      <h1>GIPHY</h1>
+      <h1 class="nav-bar-logo">RIPHY</h1>
       <ul class="nav-categories-ul">
-        <li class="nav-categories-li">Reactions</li>
+        <li class="trending-button nav-categories-li">Trending</li>
         <li class="nav-categories-li">Entertainment</li>
         <li class="nav-categories-li">Sports</li>
         <li class="nav-categories-li">Stickers</li>
         <li class="nav-categories-li">Artists</li>
         <li class="nav-categories-li">...</li>
       </ul>
-      <div class="nav-btns">
-        <button>Upload</button>
-        <button>Create</button>
-        <button>Log In</button>
-      </div>
+      <button>
+        Created by: <a href="https://www.ryanfuhrman.me">Ryan Fuhrman</a>
+      </button>
     </nav>
-    <button class="trending-button">Trending</button>
-    <label for="gif-search"></label>
-    <input
-      type="text"
-      id="gif-search"
-      class="gif-search-input"
-      placeholder="Search All GIFs and Stickers"
-    />
-    <button class="gif-search-button">Search</button>
+    <div class="search-bar">
+      <label for="search-bar-input"></label>
+      <input
+        type="text"
+        id="search-bar-input"
+        class="search-bar-input"
+        placeholder="Search All GIFs and Stickers"
+      />
+      <button class="search-bar-button">Search</button>
+    </div>
     <div class="main">
       <section class="gifs">
         <h1 class="section-title gifs-title">Trending GIFs</h1>
@@ -45,11 +48,6 @@
         </div>
       </section>
       <button class="load-more-button">Load More</button>
-      <!-- <section class="videos">
-        <h1 class="section-title videos-title">GIPHY Videos</h1>
-        <p class="see all">See All Videos ></p>
-        <div class="trending-videos"></div>
-      </section> -->
     </div>
 
     <!-- JS -->

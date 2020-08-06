@@ -9,6 +9,7 @@ html {
 }
 
 body {
+  font-family: "Mulish", sans-serif;
   background-color: rgb(20, 20, 20);
   color: #fff;
   display: flex;
@@ -25,12 +26,58 @@ body {
   justify-content: space-between;
 }
 
+.nav-bar-logo {
+  font-size: 34px;
+  font-weight: 900;
+}
+
 .nav-categories-ul {
   list-style: none;
-  width: 400px;
+  width: 520px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .nav-categories-li {
+  border-bottom: 3px solid white;
+  padding: 5px 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.search-bar {
+  width: 100%;
+  height: 55px;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar-input {
+  width: 90%;
+  height: 100%;
+}
+
+.search-bar-button {
+  width: 10%;
+  height: 100%;
+  color: rgb(20, 20, 20);
+  background-color: white;
+}
+
+.main {
+  width: 100%;
+}
+
+.gifs {
+  display: flex;
+  flex-direction: column;
+}
+
+.gifs-list {
+  display: flex;
+}
+
+.gifs-image {
+  height: 150px;
+  width: auto;
 }
