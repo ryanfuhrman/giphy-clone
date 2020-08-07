@@ -3,6 +3,7 @@
 // 3. at the bottom of the results, there is a ‘load more’ button, which gets more gifs using that search term.
 
 const gifsList = document.querySelector(".gifs-list");
+const categoriesList = document.querySelector(".categories-list");
 const gifsTitle = document.querySelector(".gifs-title");
 const trendingButton = document.querySelector(".trending-button");
 const searchField = document.querySelector(".search-bar-input");
@@ -18,9 +19,11 @@ const view = {
     gifsList.innerHTML = "";
     gifsTitle.innerHTML = "Trending GIFs";
     data.data.map((gif) => {
-      return (gifsList.innerHTML += `<li class="gifs-li" id="${gif.id}">
+      return (gifsList.innerHTML += `
+        <li class="gifs-li" id="${gif.id}">
           <img  class="gifs-image" src="${gif.images.original.url}" alt="${gif.title}"></img>
-        </li>`);
+        </li>
+      `);
     });
   },
   populateSearch: function (data, searchQuery, clearResults) {
@@ -31,22 +34,39 @@ const view = {
     }
     gifsTitle.innerHTML = `Results for "${searchQuery}"`;
     data.data.map((gif) => {
-      return (gifsList.innerHTML += `<li class="gifs-li" id="${gif.id}">
-          <img class="gifs-image" src="${gif.images.original.url}" alt="${gif.title}"></img>
-        </li>`);
+      return (gifsList.innerHTML += `
+        <li class="gifs-li" id="${gif.id}">
+          <img class="gifs-img" src="${gif.images.original.url}" alt="${gif.title}"></img>
+        </li>
+      `);
+    });
+  },
+  populateCategories: function (data) {
+    data.data.map((category) => {
+      return (categoriesList.innerHTML += `
+        <li class="categories-li" id=${category.id}>
+          <a href="" class="category-link">  
+            <h1 class="category-title">
+              ${category.name}
+            </h1>
+            <img class="category-image" src="${category.gif.images.original.url}"></img>
+          </a> 
+        </li>
+      `);
     });
   },
 };
 
 const controller = {
   starterFunction: function () {
-    this.getTrending();
+    this.loadTrending();
     this.searchInput();
-    this.getTrendingByButton();
+    this.getTrending();
+    this.getCategories();
 
     loadMoreButton.addEventListener("click", this.loadMore);
   },
-  getTrending: function () {
+  loadTrending: function () {
     loadMoreButton.style.display = "none";
     this.getGifs(
       `http://api.giphy.com/v1/gifs/trending?api_key=${config.API_KEY}&limit=${limit}`
@@ -60,8 +80,8 @@ const controller = {
     const response = await fetch(url);
     return response;
   },
-  getTrendingByButton: function () {
-    trendingButton.addEventListener("click", () => this.getTrending());
+  getTrending: function () {
+    trendingButton.addEventListener("click", () => this.loadTrending());
   },
   getSearch: function () {
     loadMoreButton.style.display = "block";
@@ -74,6 +94,16 @@ const controller = {
       .then((response) => response.json())
       .then((data) => {
         view.populateSearch(data, searchQuery, true);
+      });
+  },
+  getCategories: function () {
+    controller
+      .getGifs(
+        `http://api.giphy.com/v1/gifs/categories?api_key=${config.API_KEY}`
+      )
+      .then((response) => response.json())
+      .then((data) => {
+        view.populateCategories(data);
       });
   },
   searchInput: function () {
@@ -97,6 +127,6 @@ const controller = {
   },
 };
 
-const model = {};
+// const model = {};
 
 controller.starterFunction();
