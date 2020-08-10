@@ -94,6 +94,7 @@ body {
 .categories-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .categories-li {
@@ -111,10 +112,15 @@ body {
 .category-title {
   position: absolute;
   display: none;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }
 
 .category-link:hover .category-title {
-  display: block;
+  display: flex;
+  background-color: rgba(75, 75, 75, 0.466);
 }
 
 .category-image {
