@@ -13,7 +13,7 @@ const entertainmentButton = document.querySelector(".entertainment-button");
 const sportsButton = document.querySelector(".sports-button");
 const animalsButton = document.querySelector(".animals-button");
 const categoriesButton = document.querySelector(".categories-button");
-const limit = 10;
+const limit = 20;
 let offset = 0;
 let lastSearch = "";
 let categoriesListItem;
@@ -26,7 +26,7 @@ const view = {
     data.data.map((gif) => {
       return (gifsList.innerHTML += `
         <li class="gifs-li" id="${gif.id}">
-          <img  class="gifs-image" src="${gif.images.original.url}" alt="${gif.title}"></img>
+          <img  class="gifs-img" src="${gif.images.original.url}" alt="${gif.title}"></img>
         </li>
       `);
     });
@@ -37,6 +37,7 @@ const view = {
       gifsList.innerHTML = "";
       offset = 0;
     }
+    loadMoreButton.style.display = "block";
     gifsTitle.innerHTML = `Results for "${searchQuery}"`;
     data.data.map((gif) => {
       return (gifsList.innerHTML += `
@@ -98,7 +99,6 @@ const controller = {
     trendingButton.addEventListener("click", () => this.loadTrending());
   },
   getSearch: function () {
-    loadMoreButton.style.display = "block";
     const searchQuery = searchField.value;
     lastSearch = searchQuery;
     controller
