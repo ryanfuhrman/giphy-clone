@@ -9,9 +9,14 @@ const trendingButton = document.querySelector(".trending-button");
 const searchField = document.querySelector(".search-bar-input");
 const searchButton = document.querySelector(".search-bar-button");
 const loadMoreButton = document.querySelector(".load-more-button");
+const entertainmentButton = document.querySelector(".entertainment-button");
+const sportsButton = document.querySelector(".sports-button");
+const animalsButton = document.querySelector(".animals-button");
+const categoriesButton = document.querySelector(".categories-button");
 const limit = 10;
 let offset = 0;
 let lastSearch = "";
+let categoriesListItem;
 
 const view = {
   populateTrending: function (data) {
@@ -26,7 +31,7 @@ const view = {
       `);
     });
   },
-  populateSearch: function (data, searchQuery, clearResults) {
+  populateGifs: function (data, searchQuery, clearResults) {
     searchField.value = "";
     if (clearResults) {
       gifsList.innerHTML = "";
@@ -42,18 +47,26 @@ const view = {
     });
   },
   populateCategories: function (data) {
+    offset = 0;
+    gifsList.innerHTML = "";
+    gifsTitle.innerHTML = "Categories";
     data.data.map((category) => {
-      return (categoriesList.innerHTML += `
+      return (gifsList.innerHTML += `
         <li class="categories-li" id=${category.id}>
-          <a href="" class="category-link">  
-            <h1 class="category-title">
-              ${category.name}
-            </h1>
-            <img class="category-image" src="${category.gif.images.original.url}"></img>
-          </a> 
+          <h1 class="category-title">
+            ${category.name}
+          </h1>
+          <img class="category-image" src="${category.gif.images.original.url}"></img>
         </li>
       `);
     });
+
+    categoriesListItem = document.querySelectorAll(".categories-li");
+    for (const item of categoriesListItem) {
+      item.addEventListener("click", function (event) {
+        controller.goToCategory(event);
+      });
+    }
   },
 };
 
@@ -62,9 +75,10 @@ const controller = {
     this.loadTrending();
     this.searchInput();
     this.getTrending();
-    this.getCategories();
+    // this.getCategories();
 
     loadMoreButton.addEventListener("click", this.loadMore);
+    categoriesButton.addEventListener("click", this.getCategories);
   },
   loadTrending: function () {
     loadMoreButton.style.display = "none";
@@ -93,7 +107,7 @@ const controller = {
       )
       .then((response) => response.json())
       .then((data) => {
-        view.populateSearch(data, searchQuery, true);
+        view.populateGifs(data, searchQuery, true);
       });
   },
   getCategories: function () {
@@ -122,7 +136,19 @@ const controller = {
       )
       .then((response) => response.json())
       .then((data) => {
-        view.populateSearch(data, lastSearch, false);
+        view.populateGifs(data, lastSearch, false);
+      });
+  },
+  goToCategory: function () {
+    const category = event.target.textContent;
+    lastSearch = category;
+    controller
+      .getGifs(
+        `http://api.giphy.com/v1/gifs/search?q=${category}&api_key=${config.API_KEY}&limit=${limit}&offset=${offset}`
+      )
+      .then((response) => response.json())
+      .then((data) => {
+        view.populateGifs(data, lastSearch, true);
       });
   },
 };
