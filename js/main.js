@@ -26,7 +26,7 @@ const view = {
     data.data.map((gif) => {
       return (gifsList.innerHTML += `
         <li class="gifs-li" id="${gif.id}">
-          <img  class="gifs-img" src="${gif.images.original.url}" alt="${gif.title}"></img>
+          <img  class="gifs-img" src="${gif.images.original_still.url}" alt="${gif.title}"></img>
         </li>
       `);
     });
@@ -42,7 +42,7 @@ const view = {
     data.data.map((gif) => {
       return (gifsList.innerHTML += `
         <li class="gifs-li" id="${gif.id}">
-          <img class="gifs-img" src="${gif.images.original.url}" alt="${gif.title}"></img>
+          <img class="gifs-img" src="${gif.images.original_still.url}" alt="${gif.title}"></img>
         </li>
       `);
     });
@@ -57,7 +57,7 @@ const view = {
           <h1 class="category-title">
             ${category.name}
           </h1>
-          <img class="category-image" src="${category.gif.images.original.url}"></img>
+          <img class="category-image" src="${category.gif.images.original_still.url}"></img>
         </li>
       `);
     });
@@ -88,6 +88,7 @@ const controller = {
     )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         view.populateTrending(data);
       });
   },
