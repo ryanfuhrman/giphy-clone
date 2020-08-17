@@ -2,6 +2,8 @@
 // 2. has an input which allows you to search for specific gifs
 // 3. at the bottom of the results, there is a ‘load more’ button, which gets more gifs using that search term.
 
+const gifsContainer = document.querySelector(".gifs-container");
+const categoriesContainer = document.querySelector(".categories-container");
 const gifsList = document.querySelector(".gifs-list");
 const categoriesList = document.querySelector(".categories-list");
 const gifsTitle = document.querySelector(".gifs-title");
@@ -9,9 +11,7 @@ const trendingButton = document.querySelector(".trending-button");
 const searchField = document.querySelector(".search-bar-input");
 const searchButton = document.querySelector(".search-bar-button");
 const loadMoreButton = document.querySelector(".load-more-button");
-const entertainmentButton = document.querySelector(".entertainment-button");
-const sportsButton = document.querySelector(".sports-button");
-const animalsButton = document.querySelector(".animals-button");
+const navCategoryButtons = document.querySelectorAll(".nav-category-buttons");
 const categoriesButton = document.querySelector(".categories-button");
 const limit = 20;
 let offset = 0;
@@ -21,8 +21,11 @@ let categoriesListItem;
 const view = {
   populateTrending: function (data) {
     offset = 0;
+    categoriesContainer.style.display = "none";
+    gifsContainer.style.display = "block";
     gifsList.innerHTML = "";
     gifsTitle.innerHTML = "Trending GIFs";
+    // downsized_medium.url
     data.data.map((gif) => {
       return (gifsList.innerHTML += `
         <li class="gifs-li" id="${gif.id}">
@@ -33,6 +36,8 @@ const view = {
   },
   populateGifs: function (data, searchQuery, clearResults) {
     searchField.value = "";
+    categoriesContainer.style.display = "none";
+    gifsContainer.style.display = "block";
     if (clearResults) {
       gifsList.innerHTML = "";
       offset = 0;
@@ -49,10 +54,14 @@ const view = {
   },
   populateCategories: function (data) {
     offset = 0;
+    gifsContainer.style.display = "none";
+    loadMoreButton.style.display = "none";
+    categoriesList.innerHTML = "";
+    categoriesContainer.style.display = "block";
     gifsList.innerHTML = "";
     gifsTitle.innerHTML = "Categories";
     data.data.map((category) => {
-      return (gifsList.innerHTML += `
+      return (categoriesList.innerHTML += `
         <li class="categories-li" id=${category.id}>
           <h1 class="category-title">
             ${category.name}
@@ -80,6 +89,9 @@ const controller = {
 
     loadMoreButton.addEventListener("click", this.loadMore);
     categoriesButton.addEventListener("click", this.getCategories);
+    navCategoryButtons.forEach((btn) =>
+      btn.addEventListener("click", this.goToCategory)
+    );
   },
   loadTrending: function () {
     loadMoreButton.style.display = "none";
@@ -88,7 +100,6 @@ const controller = {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         view.populateTrending(data);
       });
   },
@@ -130,7 +141,7 @@ const controller = {
     searchButton.addEventListener("click", this.getSearch);
   },
   loadMore: function () {
-    offset += 10;
+    offset += 20;
     controller
       .getGifs(
         `http://api.giphy.com/v1/gifs/search?q=${lastSearch}&api_key=${config.API_KEY}&limit=${limit}&offset=${offset}`
@@ -143,6 +154,7 @@ const controller = {
   goToCategory: function () {
     const category = event.target.textContent;
     lastSearch = category;
+    console.log(category);
     controller
       .getGifs(
         `http://api.giphy.com/v1/gifs/search?q=${category}&api_key=${config.API_KEY}&limit=${limit}&offset=${offset}`
