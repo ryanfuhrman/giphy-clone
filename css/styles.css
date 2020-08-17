@@ -70,15 +70,23 @@ body {
 }
 
 .search-bar-input {
-  width: 90%;
+  width: 94%;
   height: 100%;
+  padding-left: 15px;
+  font-size: 18px;
 }
 
 .search-bar-button {
-  width: 10%;
+  width: 6%;
   height: 100%;
   color: rgb(20, 20, 20);
   background-color: white;
+  border: none;
+}
+
+.search-icon {
+  height: 50%;
+  width: 100%;
 }
 
 .gifs {
